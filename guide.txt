@@ -1,0 +1,22 @@
+(nếu dùng yarn thì là yarn add = npm install)
+để xóa package lỗi : yarn remove tên package
+node -v
+npm -v
+npm i -g yarn
+yarn init -y (-y là yes đồng ý tất cả câu hỏi )
+yarn add express
+yarn add morgan --dev
+yarn add nodemon --dev
+yarn add mongoose
+yarn add body-parser
+yarn add express-promise-router
+yarn add @hapi/joi
+console.log('👉👌',)
+yarn add helmet
+yarn add jsonwebtoken 
+yarn add dotenv
+
+
+
+
+
