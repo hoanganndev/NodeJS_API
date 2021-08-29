@@ -3,18 +3,23 @@ const Deck = require('../models/deckModel');
 const JWT = require('jsonwebtoken');
 const {JWT_SECRET}=require('../configs/index');
 /*
+  TODO:encodedToken
   *iss: tên người tạo
   *sub:lấy userId để encode
   *iat: ngày khởi tạo là ngày hiện tại
   *exp: thời gian hết hạn trong 1 ngày
   *scret: NodeJsApiAuthentication
+  FIXME: lưu ý , để mã hõa jwt thì có hàm verify ,
+  nhưng ở đây để ok nhất thì kết hợp với passport  để unlock key đó
+  với npm install passport-jwt có hàm verify tương tự như bên jwt thông thường
+
 */
 const encodedToken = (userId) => {
   return JWT.sign({
     iss: "Hoang An",
     sub: userId,
     iat: new Date().getTime(),
-    exp: new Date().setDate(new Date().getTime() + 1)
+    exp: new Date().setDate(new Date().getDate() + 1)
   }, JWT_SECRET)
 }
 const index = async (req, res, next) => {
@@ -77,6 +82,7 @@ const newUserDeck = async (req, res, next) => {
 
 }
 const secret = async (req, res, next) => {
+  return res.status(200).json({resource:true});
 }
 const singIn = async (req, res, next) => {
 }
