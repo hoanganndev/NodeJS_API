@@ -3,7 +3,7 @@
 node -v
 npm -v
 npm i -g yarn
-yarn init -y (-y là yes đồng ý tất cả câu hỏi )
+yarn init -y 
 yarn add express
 yarn add morgan --dev
 yarn add nodemon --dev
@@ -12,9 +12,11 @@ yarn add body-parser
 yarn add express-promise-router
 yarn add @hapi/joi
 yarn add helmet
-yarn add jsonwebtoken 
+yarn add jsonwebtoken
 yarn add dotenv
 yarn add passport passport-jwt
+yarn add bcryptjs(mã hóa mật khẩu )
+
 
 
 

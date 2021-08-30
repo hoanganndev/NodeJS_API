@@ -1,9 +1,10 @@
 const passport = require('passport');
 //passport-jwt là 1 cách thức được passport sử dụng
 const jwtStrategy = require('passport-jwt').Strategy;
-const {ExtractJwt} = require('passport-jwt');
+const { ExtractJwt } = require('passport-jwt');
 const { JWT_SECRET } = require('../configs/index');
-const User=require('../models/userModel');
+const LocalStrategy = require('passport-local').Strategy
+const User = require('../models/userModel');
 /*
 jwtFromRequest: truyền qua header kèm bearer bảo mật
 secretOrKey: mật khẩu để đối chiếu encode decode
@@ -23,3 +24,19 @@ passport.use(new jwtStrategy({
     done(error, false)
   }
 }))
+
+//TODO: passport local
+//isValidPassword check pass in userModel
+passport.use(new LocalStrategy({
+  usernameField: 'email'
+},async (email, passport, done) => {
+  try {
+    const user = await User.findOne({ email });
+    if (!user) return done(null, false);
+    const isCorrectPassword = await user.isValidPassword(passport);
+    if (!isCorrectPassword) return done(null, false);
+    done(null, user);
+  } catch (error) {
+    done(error, false);
+  }
+}));

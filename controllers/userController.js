@@ -85,18 +85,23 @@ const secret = async (req, res, next) => {
   return res.status(200).json({resource:true});
 }
 const singIn = async (req, res, next) => {
+  //Assign a token
+  //user được passport local in passport.js trả về
+  const token =encodedToken(req.user._id);
+  res.setHeader('Authorization',token);
+  return res.status(200).json({success:true});
 }
 const signUp = async (req, res, next) => {
-  console.log('🔥',JWT_SECRET)
-  // console.log('🔥=>signUp req.value.body', req.value.body);
+  //console.log('🔥JWT_SECRET',JWT_SECRET)
+  console.log('🔥=>signUp req.value.body', req.value.body);
   const { firstName, lastName, email, password } = req.value.body;
   //Check if there is a user the same user
   const foundUser = await User.findOne({ email })
-  // console.log('🔥=>foundUser', foundUser);
+  console.log('🔥=>foundUser', foundUser);
   if (foundUser) return res.status(403).json({ error: { message: "Email is already in user" } })
   //Create a new user
   const newUser = new User({ firstName, lastName, email, password });
-  // console.log('🔥=>newUser', newUser);
+  console.log('🔥=>newUser', newUser);
   await newUser.save();
   //Encode a token
   const token =encodedToken(newUser._id);
@@ -104,10 +109,6 @@ const signUp = async (req, res, next) => {
   // trả token thông qua header
   res.setHeader('Authorization', token);
   return res.status(201).json({ success: true});
-
-
-
-
 }
 
 module.exports = {
